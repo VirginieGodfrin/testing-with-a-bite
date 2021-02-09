@@ -2,17 +2,27 @@
 namespace Tests\AppBundle\Entity;
 
 use PHPUnit\Framework\TestCase;
-
-// Directory: Tests
-// Config: phpUnit.xml.dist
-// Namespace start with Tests\...
-// Test class must extends TestCase and end with Test: xxxTest
-// All the methods are public and strat with test : testXxx
+use AppBundle\Entity\Dinosaur;
 
 class DinosaurTest extends TestCase
 {
-	public function testThatYourComputerWorks()
+	public function testSettingLength()
     {
-        $this->assertTrue(false);
+        $dinosaur = new Dinosaur();
+
+        $this->assertSame(0, $dinosaur->getLength());
+
+        $dinosaur->setLength(9);
+
+        $this->assertSame(9, $dinosaur->getLength());
+    }
+
+    public function testDinosaurHasNotShrunk()
+    {
+        $dinosaur = new Dinosaur();
+
+        $dinosaur->setLength(10);
+
+        $this->assertGreaterThan(12, $dinosaur->getLength(), 'Did you put it in the washing machine?');
     }
 }
