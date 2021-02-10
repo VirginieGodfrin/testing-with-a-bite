@@ -19,6 +19,6 @@ class DinosaurFactory
 
     public function growFromSpecification(string $specification): Dinosaur
     {
-    	
+
     }
 }
