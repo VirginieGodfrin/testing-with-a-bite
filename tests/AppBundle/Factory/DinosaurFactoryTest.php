@@ -13,13 +13,18 @@ class DinosaurFactoryTest extends TestCase
      */
     private $factory;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    private $lengthDeterminator;
+
     // If you have a method that's exactly called setUp, PHPUnit will automatically call it before each test.
     // This will make sure that the $factory property is a new, fresh DinosaurFactory object for every test
     public function setUp():void
     {	
         // The mock
-        $mockLengthDeterminator = $this->createMock(DinosaurLengthDeterminator::class);
-        $this->factory = new DinosaurFactory($mockLengthDeterminator);
+        $this->lengthDeterminator = $this->createMock(DinosaurLengthDeterminator::class);
+        $this->factory = new DinosaurFactory($this->lengthDeterminator);
     }
 
 	public function testItGrowsALargeVelociraptor()
@@ -59,9 +64,13 @@ class DinosaurFactoryTest extends TestCase
 		string $spec, 
 		bool $expectedIsCarnivorous
 	){
+        $this->lengthDeterminator->method('getLengthFromSpecification')
+        ->willReturn(20);
+
 		$dinosaur = $this->factory->growFromSpecification($spec);
 
 		$this->assertSame($expectedIsCarnivorous, $dinosaur->isCarnivorous(), 'Diets do not match');
+        $this->assertSame(20, $dinosaur->getLength());
 	}
 
 	// the data providers
