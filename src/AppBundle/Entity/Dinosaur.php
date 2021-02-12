@@ -13,6 +13,13 @@ class Dinosaur
 	const LARGE = 10;
 
 	const HUGE = 30;
+
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 	
     /**
      * @ORM\Column(type="integer")
