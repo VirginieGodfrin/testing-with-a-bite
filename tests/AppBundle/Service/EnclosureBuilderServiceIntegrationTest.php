@@ -11,7 +11,7 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 
 class EnclosureBuilderServiceIntegrationTest extends KernelTestCase
 {
-	public function setUp() : void
+	public function setUp()
     {
         self::bootKernel();
 
