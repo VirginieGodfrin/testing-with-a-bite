@@ -7,6 +7,7 @@ use AppBundle\Entity\Dinosaur;
 use AppBundle\Entity\Enclosure;
 use AppBundle\Entity\Security;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use AppBundle\Factory\DinosaurFactory;
 
 
 class EnclosureBuilderServiceIntegrationTest extends KernelTestCase
@@ -24,8 +25,21 @@ class EnclosureBuilderServiceIntegrationTest extends KernelTestCase
 
 	public function testItBuildsEnclosureWithDefaultSpecifications()
 	{
-        $enclosureBuilderService = static::$kernel->getContainer()
-            ->get('test.'.EnclosureBuilderService::class);
+        $dinoFactory = $this->createMock(DinosaurFactory::class);
+        
+        // willReturnCallback: the best way to return many dino
+        $dinoFactory->expects($this->any())
+            ->method('growFromSpecification')
+            ->willReturnCallback(function($spec) {
+                return new Dinosaur();
+            });
+        // $enclosureBuilderService = static::$kernel->getContainer()
+        //     ->get('test.'.EnclosureBuilderService::class);
+        $enclosureBuilderService = new EnclosureBuilderService(
+            $this->getEntityManager(),
+            $dinoFactory
+        );
+
 
         $enclosureBuilderService->buildEnclosure();
 
