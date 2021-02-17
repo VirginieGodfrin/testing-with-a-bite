@@ -44,9 +44,19 @@ class Enclosure
         }
     }
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function getDinosaurs(): Collection
     {
         return $this->dinosaurs;
+    }
+
+    public function getDinosaurCount(): int
+    {
+        return $this->dinosaurs->count();
     }
 
     public function addDinosaur(Dinosaur $dinosaur)
